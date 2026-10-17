@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # Source 1: Lấy mã nguồn gốc từ Helm Repo của ArgoCD
+    - repoURL: 'https://argoproj.github.io/argo-helm'
+      chart: argo-cd
+      targetRevision: 5.51.6  # Giữ đúng version bạn đang dùng
+      helm:
+        valueFiles:
+          - $values/argocd/custom-values.yaml # Lấy file values từ Source 2
+    
+    # Source 2: Lấy file cấu hình từ Git Repo của bạn
+    - repoURL: 'https://github.com/<tài-khoản-của-bạn>/<tên-repo-của-bạn>.git'
+      targetRevision: main    # Hoặc nhánh master
+      ref: values             # Đặt tên tham chiếu là "values" để Source 1 gọi được
+  
+  destination:
+    server: 'https://kubernetes.default.svc' # Cài ngay tại cụm local này
+    namespace: argocd
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true # Tự động sửa lỗi nếu có ai đó xóa nhầm pod/service
