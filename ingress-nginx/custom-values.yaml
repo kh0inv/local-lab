@@ -1,0 +1,6 @@
+controller:
+  service:
+    type: LoadBalancer 
+  # Tắt tính năng webhook kiểm tra cú pháp trên local để cài đặt nhanh hơn và tránh lỗi vặt
+  admissionWebhooks:
+    enabled: false
