@@ -8,11 +8,11 @@ spec:
   sources:
     - repoURL: 'https://argoproj.github.io/argo-helm'
       chart: argo-cd
-      targetRevision: 5.51.6
+      targetRevision: 10.10.5
       helm:
         valueFiles:
           - $values/argocd/custom-values.yaml # Lấy file values từ Source 2
-    
+
     # Source 2: Lấy file cấu hình từ Git Repo của bạn
     - repoURL: 'https://github.com/kh0inv/local-lab.git'
       targetRevision: main
