@@ -1,0 +1,24 @@
+controller:
+  # Cấu hình tài khoản admin mặc định cho local lab
+  adminUser: "admin"
+  adminPassword: "admin123"
+
+  # Cấu hình Ingress truy cập qua domain nội bộ
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"
+    hostName: "jenkins.local"
+
+  # Cấu hình tài nguyên phù hợp cho máy local
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "2000m"
+      memory: "2048Mi"
+
+  # Cấu hình lưu trữ dữ liệu Jenkins (PVC)
+  persistence:
+    enabled: true
+    size: "10Gi"

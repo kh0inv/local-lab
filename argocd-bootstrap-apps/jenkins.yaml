@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # Source 1: Helm chart từ kho lưu trữ chính thức của Jenkins
+    - repoURL: 'https://charts.jenkins.io'
+      chart: jenkins
+      targetRevision: 5.8.106 # Hoặc phiên bản mới nhất từ helm search repo
+      helm:
+        valueFiles:
+          - $values/jenkins/custom-values.yaml # Lấy file values từ Source 2
+
+    # Source 2: Lấy file cấu hình từ Git Repo của bạn
+    - repoURL: 'https://github.com/kh0inv/local-lab.git'
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: jenkins
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
