@@ -1,7 +1,8 @@
 controller:
   # Cấu hình tài khoản admin mặc định cho local lab
-  adminUser: "admin"
-  adminPassword: "admin123"
+  admin:
+    username: "admin"
+    password: "admin123"
 
   # Cấu hình Ingress truy cập qua domain nội bộ
   ingress:
