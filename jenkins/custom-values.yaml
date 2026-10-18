@@ -1,5 +1,4 @@
 controller:
-  # Cấu hình tài khoản admin mặc định cho local lab
   admin:
     username: "admin"
     password: "admin123"
@@ -7,13 +6,17 @@ controller:
   # Tắt tự động tải plugin lúc init để tránh lỗi SSL PKIX từ proxy mạng
   installPlugins: []
 
-  # Cấu hình Ingress truy cập qua domain nội bộ
   ingress:
     enabled: true
     ingressClassName: "nginx"
     hostName: "jenkins.local"
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    tls:
+      - secretName: jenkins-local-tls
+        hosts:
+          - jenkins.local
 
-  # Cấu hình tài nguyên phù hợp cho máy local
   resources:
     requests:
       cpu: "100m"
@@ -22,7 +25,6 @@ controller:
       cpu: "2000m"
       memory: "2048Mi"
 
-  # Cấu hình lưu trữ dữ liệu Jenkins (PVC)
   persistence:
     enabled: true
     size: "10Gi"
