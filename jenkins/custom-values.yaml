@@ -4,6 +4,9 @@ controller:
     username: "admin"
     password: "admin123"
 
+  # Tắt tự động tải plugin lúc init để tránh lỗi SSL PKIX từ proxy mạng
+  installPlugins: []
+
   # Cấu hình Ingress truy cập qua domain nội bộ
   ingress:
     enabled: true
